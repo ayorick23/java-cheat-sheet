@@ -2,16 +2,34 @@
 
 **Java** es un lenguaje de programación de alto nivel, orientado a objetos y de propósito general que se lanzó por primera vez en 1995 por Sun Microsystems (ahora parte de Oracle). Está diseñado para ser independiente de la plataforma, lo que significa que el código compilado (llamado bytecode) puede ejecutarse en cualquier sistema operativo que tenga una Máquina Virtual de Java (**JVM**). El famoso lema de Java, "Write Once, Run Anywhere" (Escribe una vez, ejecuta en cualquier lugar), resume perfectamente esta portabilidad.
 
-## Sintaxis Básica y Generalidades
+## Arquitectura de Java
+
+```java
+Código Java (.java) → Compilador (javac) → Bytecode (.class) → JVM → Código Máquina
+```
+
+1. **JDK (Java Development Kit):** Kit completo de desarrollo
+2. **JRE (Java Runtime Environment):** Entorno de ejecución
+3. **JVM (Java Virtual Machine):** Máquina virtual que ejecuta el bytecode
+
+## Sintaxis Básica
 
 La sintaxis de Java es similar a la de C++. Es sensible a mayúsculas y minúsculas, lo que significa que `miVariable` y `mivariable` son dos variables diferentes. Cada sentencia o línea de código debe terminar con un punto y coma (`;`).
 
 Un programa básico en Java siempre contendrá al menos una clase, y el punto de entrada para su ejecución es el método `main`.
 
 ```java
+// Declaración del paquete (opcional)
+package com.ejemplo;
+
+// Importación de librerías
+import java.util.Scanner;
+
+// Clase principal
 public class HolaMundo {
+    // Método main - punto de entrada del programa
     public static void main(String[] args) {
-        System.out.println("¡Hola, Mundo!"); // Esto imprime texto en la consola
+        System.out.println("¡Hola, Mundo!");
     }
 }
 ```
@@ -28,7 +46,7 @@ public class HolaMundo {
 
 Los tipos de datos en Java se dividen en dos categorías principales: primitivos y de referencia. Los tipos primitivos son la base del lenguaje y almacenan valores simples, mientras que los tipos de referencia almacenan las direcciones de memoria de objetos más complejos.
 
-### Tipos de Datos Primitivos
+### Primitivos
 
 Son los tipos de datos fundamentales y más básicos en Java. Aquí se muestra una tabla con los más comunes:
 
@@ -43,17 +61,88 @@ Son los tipos de datos fundamentales y más básicos en Java. Aquí se muestra u
 | `boolean` | 1 bit   | `false`           | `true` o `false`                              | Para banderas lógicas                       |
 | `char`    | 16 bits | `\u0000`          | Un solo carácter (Unicode)                    | Almacena caracteres como 'a', 'b', '$'      |
 
-### Tipos de Datos de Referencia
+### Referencia
 
 Los tipos de datos de referencia (objetos) son aquellos que no almacenan directamente el valor, sino una referencia (dirección de memoria) al objeto en sí. Algunos ejemplos son `String`, arreglos (arrays) y cualquier clase que definas (`HolaMundo`, por ejemplo).
 
-## Tipos de Variables y su Alcance (Scopes)
+## Tipos de Variables y su Alcance
+
+### Definición de Variables
+
+Una variable es un contenedor en memoria que almacena datos de un tipo específico y puede ser modificada durante la ejecución de un programa.
+
+```java
+// Sintaxis: tipo nombre = valor;
+int edad = 25;
+String nombre = "Juan";
+double salario = 50000.50;
+boolean esEstudiante = true;
+```
+
+### Definición de Constantes
+
+una constante es una variable cuyo valor no puede ser modificado después de ser asignado, permitiendo el almacenamiento de valores fijos y usados frecuentemente. Se definen con las palabras clave `static` y `final`, y se recomienda escribirlas en mayúsculas para mejorar la legibilidad del código.
+
+```java
+// Con final - no puede cambiar después de inicialización
+final double PI = 3.14159;
+final String EMPRESA = "Mi Empresa";
+
+// Constantes de clase (static final)
+public static final int MAX_USUARIOS = 100;
+```
+
+### Alcance (Scopes)
 
 El **alcance** de una variable define la región del programa en la que se puede acceder a esa variable. En Java, hay tres tipos principales de variables según su alcance:
 
 1. **Variables de Instancia (o Miembro de Clase):** Se declaran dentro de una clase, pero fuera de cualquier método, constructor o bloque. Pertenecen a un objeto y se crean cuando se crea el objeto y se destruyen cuando el objeto se destruye.
 2. **Variables Locales:** Se declaran dentro de un método, constructor o bloque. Solo son accesibles dentro de ese bloque y se destruyen cuando el bloque finaliza. Deben ser inicializadas antes de usarse.
 3. **Variables de Clase (o Estáticas):** Se declaran dentro de una clase, con la palabra clave `static`. Se crean una sola vez cuando la clase se carga y pueden ser accedidas por todos los objetos de esa clase.
+
+## Operadores
+
+### Operadores Aritméticos
+
+| Operador | Nombre         | Uso     | Resultado (si `a = 10`, `b = 3`) |
+| -------- | -------------- | ------- | -------------------------------- |
+| `+`      | Suma           | `a + b` | `13`                             |
+| `-`      | Resta          | `a - b` | `7`                              |
+| `*`      | Multiplicación | `a * b` | `30`                             |
+| `/`      | División       | `a / b` | `3` (división entera)            |
+| `%`      | Módulo (resto) | `a % b` | `1` (resto de 10 / 3)            |
+| `++`     | Incremento     | `a++`   | `a = 11` (post-incremento)       |
+| `--`     | Decremento     | `a--`   | `a = 9` (post-decremento)        |
+
+### Operadores Relacionales
+
+| Operador | Nombre            | Uso      | Resultado (si `a = 5`, `b = 3`) |
+| -------- | ----------------- | -------- | ------------------------------- |
+| ==       | Igual a           | `a == b` | `false`                         |
+| !=       | Diferente de      | `a != b` | `true`                          |
+| >        | Mayor que         | `a > b`  | `true`                          |
+| <        | Menor que         | `a < b`  | `false`                         |
+| >=       | Mayor o igual que | `a >= 5` | `true`                          |
+| <=       | Menor o igual que | `a <= 3` | `false`                         |
+
+### Operadores Lógicos
+
+| Operador | Nombre           | Uso        | Resultado (`a=true`, `b=false`)       |
+| -------- | ---------------- | ---------- | ------------------------------------- |
+| `&&`     | `AND` (Y lógico) | `a && b`   | `false` (ambos deben ser `true`)      |
+| `\|\|`   | `OR` (O lógico)  | `a \|\| b` | `true` (al menos uno debe ser `true`) |
+| `!`      | `NOT` (Negación) | `!a`       | `false` (invierte el valor)           |
+
+### Operadores de Asignación
+
+| Operador | Uso      | Equivalente a |
+| -------- | -------- | ------------- |
+| `=`      | `a = 5`  | `a = 5`       |
+| `+=`     | `a += 3` | `a = a + 3`   |
+| `-=`     | `a -= 2` | `a = a - 2`   |
+| `*=`     | `a *= 4` | `a = a * 4`   |
+| `/=`     | `a /= 2` | `a = a / 2`   |
+| `%=`     | `a %= 3` | `a = a % 3`   |
 
 ## Conversión de Tipos de Datos
 
@@ -73,24 +162,3 @@ Los **modificadores de acceso** en Java son palabras clave que se utilizan para 
 2. `protected`: El miembro es accesible dentro de su propio paquete y por subclases (clases que heredan de ella), incluso si están en un paquete diferente.
 3. `default` **(o sin modificador)**: El miembro solo es accesible dentro de su propio paquete. Si no se especifica ningún modificador, este es el nivel de acceso por defecto.
 4. `private`: El miembro solo es accesible dentro de la clase en la que fue declarado. Es el nivel de acceso más restrictivo.
-
-## Strings
-
-En Java, `String` no es un tipo de dato primitivo, sino una clase de referencia que se utiliza para almacenar secuencias de caracteres, es decir, texto. Aunque se manipulan de manera similar a los tipos primitivos en muchas operaciones, los objetos `String` son inmutables, lo que significa que una vez que se crean, no se pueden modificar. Cualquier operación que parezca modificar un `String` en realidad crea una nueva instancia de `String` con el nuevo valor.
-
-### Métodos de la Clase `String`
-
-La clase `String` viene con una gran cantidad de métodos integrados para manipular cadenas de texto. Aquí están algunos de los más relevantes que te ayudarán en tu día a día:
-
-- `length()`: Devuelve la longitud de la cadena, es decir, el número de caracteres que contiene.
-- `equals(String)`: Compara si dos cadenas tienen el mismo valor. Es crucial usar `equals()` para comparar el contenido de las cadenas, ya que el operador `==` solo verifica si las dos variables de referencia apuntan al mismo objeto en memoria.
-- `equalsIgnoreCase(String)`: Similar a `equals()`, pero ignora la diferencia entre mayúsculas y minúsculas al comparar.
-- `toUpperCase()`: Convierte todos los caracteres de la cadena a mayúsculas.
-- `toLowerCase()`: Convierte todos los caracteres de la cadena a minúsculas.
-- `charAt(int index)`: Devuelve el carácter en una posición específica de la cadena. El índice de los caracteres comienza en `0`.
-- `indexOf(String)`: Devuelve la posición de la primera ocurrencia de un sub-string dentro de la cadena. Si no se encuentra, devuelve `-1`.
-- `substring(int beginIndex)`: Extrae una sub-cadena desde la posición de inicio especificada hasta el final de la cadena.
-- `substring(int beginIndex, int endIndex)`: Extrae una sub-cadena desde la posición de inicio (inclusive) hasta la posición de fin (exclusiva).
-- `replace(char oldChar, char newChar)`: Reemplaza todas las ocurrencias de un carácter con otro.
-- `contains(CharSequence s)`: Retorna `true` si la cadena contiene la secuencia de caracteres especificada.
-- `trim()`: Elimina los espacios en blanco al principio y al final de la cadena.
